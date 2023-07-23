@@ -121,7 +121,7 @@ const CalendarHeader = () => {
  * Yet another full calendar
  * Pass [from] and [to], then you got it done :D
  */
-const ExtremeCalendar = (props) => {
+export const ExtremeCalendar = (props) => {
     let { from, to } = props;
     if (from) {
         from = dayjs(from).startOf('week');
@@ -171,5 +171,3 @@ const ExtremeCalendar = (props) => {
         </div>
     )
 }
-
-export default ExtremeCalendar;

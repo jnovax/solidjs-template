@@ -16,7 +16,6 @@ module.exports = {
     }
   },
   plugins: [
-    require("@kobalte/tailwindcss"),
     require('flowbite/plugin')
   ],
 }

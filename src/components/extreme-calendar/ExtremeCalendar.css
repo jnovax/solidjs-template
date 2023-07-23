@@ -1,0 +1,91 @@
+.ExCalendar {
+    font-size: 14px;
+    min-width: 350px;
+}
+
+.ExCalendar .Header * {
+    min-width: 50px;
+}
+
+.ExCalendar .Week .col {
+    min-height: 100px;
+    min-width: 50px;
+    padding: 2px;
+}
+
+.ExCalendar .Day,
+.ExCalendar .Event {
+    min-height: 20px;
+}
+
+.ExCalendar .Day .disabled {
+    color: #9d9d9d;
+}
+
+.ExCalendar .Day.holiday {
+    background-color: #ffedd0;
+}
+
+.ExCalendar .Day.today {
+    background-color: rgba(255, 220, 40, 0.15);
+}
+
+.ExCalendar .Day:hover {
+    background-color: rgba(255, 220, 40, 0.15);
+}
+
+.ExCalendarPopup {
+    padding: 6px;
+    min-width: 100px;
+}
+
+.DayEvent,
+.TimeEvent,
+.ViewMoreEventLink {
+    padding: 2px;
+    display: block;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 2px;
+    border-radius: 3px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ViewMoreEventLink {
+    color: rgb(128, 128, 128);
+}
+
+.DayEvent:hover,
+.TimeEvent:hover,
+.ViewMoreEventLink:hover {
+    cursor: pointer;
+}
+
+.DayEvent:hover {
+    background-color: rgb(0, 127, 225);
+    color: #eee;
+}
+
+.TimeEvent:hover,
+.ViewMoreEventLink:hover {
+    background-color: #dfdfdf;
+}
+
+.DayEvent {
+    background-color: rgb(0, 143, 251);
+    color: #eee;
+}
+
+.TimeEvent::before {
+    content: '●';
+    color: rgb(0, 143, 251);
+    padding-right: 2px;
+}
+
+.TimeEvent span:nth-child(2) {
+    padding-left: 2px;
+    font-weight: 600;
+}

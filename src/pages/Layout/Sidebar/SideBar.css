@@ -1,0 +1,8 @@
+svg[sidebar-toggle-item] {
+    transition: transform .1s ease-in-out;
+    transform: rotate(90deg);
+}
+
+button[aria-expanded=true] svg[sidebar-toggle-item] {
+    transform: rotate(0deg);
+}

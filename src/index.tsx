@@ -1,8 +1,11 @@
 /* @refresh reload */
 import { render } from 'solid-js/web';
+import { Router } from "@solidjs/router"; // 👈 Import the router
 
 import './index.css';
 import App from './App';
+
+import 'solid-devtools'
 
 const root = document.getElementById('root');
 
@@ -12,4 +15,9 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   );
 }
 
-render(() => <App />, root!);
+render(
+  () => (
+    <Router> {/* 👈 Wrap the router around the app */}
+      <App />
+    </Router>
+  ), root!);

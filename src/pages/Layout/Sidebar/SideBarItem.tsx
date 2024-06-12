@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { splitProps } from "solid-js";
 
 
-const SideBarItem = (props) => {
+const SideBarItem = (props: any) => {
     const [local, others] = splitProps(props, ['href', 'icon', 'value', 'class', 'indicator', 'indicatorClass']);
 
     return (

@@ -4,7 +4,7 @@ import { Component, JSX, splitProps } from 'solid-js';
 interface TextFieldProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     name: string;
-    type?: 'text' | 'number' | 'password' | 'checkbox' | 'email' | 'url' | 'date' | 'time' | undefined;
+    type?: 'text' | 'number' | 'password' | 'checkbox' | 'email' | 'url' | 'date' | 'time';
     value?: string;
     error?: string;
     required?: boolean;

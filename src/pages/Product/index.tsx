@@ -1,11 +1,11 @@
-import { For, Match, Switch, createMemo, createSignal } from "solid-js";
+import { For, Match, Switch, createSignal } from "solid-js";
 import { QueryClient, QueryClientProvider, createQuery } from '@tanstack/solid-query'
-import { Cell, ColumnDef, PaginationState, createSolidTable, flexRender, getCoreRowModel, getPaginationRowModel } from "@tanstack/solid-table";
+import { Cell, ColumnDef, PaginationState, createColumnHelper, createSolidTable, flexRender, getCoreRowModel } from "@tanstack/solid-table";
 import { fetchData, Product } from '../../data';
 import clsx from "clsx";
 import PageSizeSelect from "./PageSizeSelect";
 import ControlBar from "./ControlBar";
-import Button from "../../components/button/Button";
+import Button from "../../components/Button";
 
 const queryClient = new QueryClient()
 const ProductPage = () => (
@@ -26,46 +26,34 @@ const ProductTable = () => {
         { keepPreviousData: true, refetchOnWindowFocus: false }
     )
 
-    const columns: ColumnDef<Product>[] = [
-        {
-            id: 'select',
-        },
-        {
+    const columnHelper = createColumnHelper<Product>();
+    const columns: ColumnDef<Product, any>[] = [
+        columnHelper.display({
+            id: 'select'
+        }),
+        columnHelper.accessor('name', {
             id: 'name',
-            accessorKey: 'name',
-            cell: info => info.getValue(),
-            footer: info => info.column.id,
-        },
-        {
+            header: 'product name'
+        }),
+        columnHelper.accessor('category', {
             id: 'category',
-            accessorKey: 'category',
-            cell: info => info.getValue(),
-            footer: info => info.column.id,
-        },
-        {
+        }),
+        columnHelper.accessor('technology', {
             id: 'technology',
-            accessorKey: 'technology',
-            cell: info => info.getValue(),
-            footer: info => info.column.id,
-        },
-        {
+        }),
+        columnHelper.accessor('description', {
             id: 'description',
-            accessorKey: 'description',
-            cell: info => info.getValue(),
-            footer: info => info.column.id,
-        },
-        {
+        }),
+        columnHelper.accessor('id', {
+            id: 'id',
+            cell: prop => <span>#{prop.getValue()}</span>
+        }),
+        columnHelper.accessor('price', {
             id: 'price',
-            accessorKey: 'price',
-            cell: info => info.getValue(),
-            footer: info => info.column.id,
-        },
-        {
+        }),
+        columnHelper.accessor('discount', {
             id: 'discount',
-            accessorKey: 'discount',
-            cell: info => info.getValue(),
-            footer: info => info.column.id,
-        }
+        }),
     ];
 
     const initSelection: { [id: string]: boolean } = {};
@@ -86,6 +74,9 @@ const ProductTable = () => {
         getCoreRowModel: getCoreRowModel(),
         manualPagination: true,
         debugTable: true,
+        initialState: {
+            columnVisibility: { 'category': false }
+        }
     });
 
     const toggleRowSelection = (cell: Cell<Product, unknown>) => {
@@ -177,13 +168,19 @@ const ProductTable = () => {
                                                 <For each={row.getVisibleCells()}>
                                                     {cell => (
                                                         <Switch fallback={
-                                                            <td class={clsx('p-4', (cell.column.id === "description") && "max-w-sm overflow-hidden truncate")}>
+                                                            <td class={clsx('p-4', (cell.column.id === "description") && "max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400")}>
                                                                 {flexRender(
                                                                     cell.column.columnDef.cell,
                                                                     cell.getContext()
                                                                 )}
                                                             </td>
                                                         }>
+                                                            <Match when={cell.column.id === "name"}>
+                                                                <td class="p-4">
+                                                                    <div class="text-base font-semibold text-gray-900 dark:text-white">{row.getValue('name')}</div>
+                                                                    <div class="text-sm font-normal text-gray-500 dark:text-gray-400">{row.getValue('category')}</div>
+                                                                </td>
+                                                            </Match>
                                                             <Match when={cell.column.id === "select"}>
                                                                 <td class="flex items-center p-4">
                                                                     <input type="checkbox"
@@ -205,7 +202,7 @@ const ProductTable = () => {
                 </div>
             </div>
 
-            <div class="sticky bottom-0 right-0 w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
+            <div class="sticky bottom-0 right-0 w-full p-4 bg-white border-t border-gray-200 flex justify-start space-x-4 dark:bg-gray-800 dark:border-gray-700">
                 <Button onClick={() => table.previousPage()}
                     disabled={!getCanPreviousPage()}>
                     <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -213,7 +210,7 @@ const ProductTable = () => {
                     </svg>
                     Previous
                 </Button>
-                <div class="flex items-center justify-center px-4 h-10  text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <div class="flex items-center justify-center h-10 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     Page {(dataQuery.data?.pageIndex ?? 0) + 1} of {dataQuery.data?.pageCount ?? 0}
                 </div>
                 <Button onClick={() => table.nextPage()}

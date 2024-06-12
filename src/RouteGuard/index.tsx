@@ -1,8 +1,7 @@
-import { Outlet, useNavigate } from "@solidjs/router";
-import { createEffect } from "solid-js";
+import { Outlet, useBeforeLeave, useNavigate } from "@solidjs/router";
+import { createEffect, createSignal } from "solid-js";
 import Navbar from "../pages/Layout/Navbar";
 import Sidebar from "../pages/Layout/Sidebar";
-import Footer from "../pages/Layout/Footer";
 
 export default function RouteGuard() {
   const navigate = useNavigate();
@@ -12,13 +11,24 @@ export default function RouteGuard() {
     if (!token) {
       navigate('/signin', { replace: true });
     }
-  })
+  });
+
+  const [sidebarCollapse, setSidebarCollapse] = createSignal(false, { equals: false });
+  const toggleSideBar = () => {
+    setSidebarCollapse(!sidebarCollapse());
+  }
+
+  useBeforeLeave(() => {
+    if (!sidebarCollapse()) {
+      toggleSideBar();
+    }
+  });
 
   return (
     <>
-      <Navbar />
+      <Navbar onToggleSideBar={() => toggleSideBar()} sideBarCollapsed={sidebarCollapse()} />
       <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
-        <Sidebar />
+        <Sidebar collapse={sidebarCollapse()} onCollapseChanged={() => toggleSideBar()} />
         <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
           <main>
             <Outlet />

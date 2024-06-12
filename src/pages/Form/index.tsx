@@ -2,7 +2,7 @@ import TextField from "../../components/forms/TextField"
 
 const DemoForm = () => {
     return (
-        <div class="p-6 items-center justify-center mx-auto md:h-screen dark:bg-gray-900">
+        <div class="p-4 bg-white block border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <form>
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
@@ -17,14 +17,14 @@ const DemoForm = () => {
                     <div>
                         <TextField name="phone" label="Phone number" required />
                     </div>
-                    {/* <div>
+                    <div>
                         <TextField name="website" label="Website URL" type="url" required />
                     </div>
                     <div>
                         <TextField name="visitors" label="Unique visitors (per month)" type="number" required />
-                    </div> */}
+                    </div>
                 </div>
-                {/* <div class="mb-6">
+                <div class="mb-6">
                     <TextField name="email" label="Email address" type="email" required />
                 </div>
                 <div class="mb-6">
@@ -32,7 +32,7 @@ const DemoForm = () => {
                 </div>
                 <div class="mb-6">
                     <TextField name="confirm_password" label="Confirm password" type="password" required />
-                </div> */}
+                </div>
                 <div class="flex items-start mb-6">
                     <div class="flex items-center">
                         <input id="link-checkbox" type="checkbox" value="" class="w-4 h-4 

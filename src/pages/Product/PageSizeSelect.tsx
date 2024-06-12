@@ -1,7 +1,7 @@
 import { Index, splitProps } from "solid-js"
 import clsx from "clsx"
 
-export default function PageSizeSelect (props) {
+export default function PageSizeSelect(props) {
     const [local, others] = splitProps(props, ["class"])
     return (
         <select

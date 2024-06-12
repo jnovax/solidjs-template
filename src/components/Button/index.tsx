@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { splitProps } from "solid-js";
 
-const Button = (props) => {
+const Button = (props: any) => {
     const [local, others] = splitProps(props, ['class', 'children']);
 
     return (

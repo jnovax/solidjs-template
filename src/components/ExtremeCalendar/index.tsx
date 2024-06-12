@@ -1,8 +1,8 @@
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import 'dayjs/locale/vi';
-import { Match, Switch, createSignal } from 'solid-js';
-import "./ExtremeCalendar.css";
+import { For, Match, Show, Switch, createSignal } from 'solid-js';
+import "./styles.css";
 import clsx from 'clsx';
 
 dayjs.extend(localeData);
@@ -12,7 +12,7 @@ const MAX_NO_EVENTS = 3;
 const firstDayOfWeek = dayjs.localeData().firstDayOfWeek();
 const lastDayOfWeek = firstDayOfWeek == 0 ? 7 : firstDayOfWeek - 1;
 
-const ViewMoreEventLink = (props) => {
+const ViewMoreEventLink = (props: any) => {
     const { events, day } = props;
     return (<>
         <a href="#" class="text-blue-600 underline dark:text-blue-500 hover:no-underline" data-popover-target="popover-default">
@@ -32,7 +32,7 @@ const ViewMoreEventLink = (props) => {
     )
 }
 
-const CalendarEvent = (props) => {
+const CalendarEvent = (props: any) => {
     const { title, time, description } = props;
 
     if (time) {
@@ -51,7 +51,7 @@ const CalendarEvent = (props) => {
     }
 }
 
-const CalendarDay = (props) => {
+const CalendarDay = (props: any) => {
     const { events, day, from, to } = props;
     const formatedDate = (day.date() == 1) ? day.format('D/M') : day.format('D');
 
@@ -81,7 +81,7 @@ const CalendarDay = (props) => {
     </div>
 }
 
-const CalendarWeek = (props) => {
+const CalendarWeek = (props: any) => {
     const { days, events, ...others } = props;
 
     return (
@@ -94,15 +94,15 @@ const CalendarWeek = (props) => {
 }
 
 const CalendarHeader = () => {
-    function titleCase(string) {
-        const sentence = string.toLowerCase().split(" ");
+    function titleCase(s: string) {
+        const sentence = s.toLowerCase().split(" ");
         for (let i = 0; i < sentence.length; i++) {
             sentence[i] = sentence[i][0].toUpperCase() + sentence[i].slice(1);
         }
         return sentence.join(" ");
     }
 
-    let weekdays = dayjs.localeData().weekdays();
+    let weekdays = dayjs.localeData().weekdays().map(x => x);
 
     if (firstDayOfWeek > 0) {
         weekdays = [...weekdays.slice(firstDayOfWeek), ...weekdays.slice(0, firstDayOfWeek)];
@@ -121,7 +121,7 @@ const CalendarHeader = () => {
  * Yet another full calendar
  * Pass [from] and [to], then you got it done :D
  */
-export const ExtremeCalendar = (props) => {
+export const ExtremeCalendar = (props: any) => {
     let { from, to } = props;
     if (from) {
         from = dayjs(from).startOf('week');
@@ -139,7 +139,7 @@ export const ExtremeCalendar = (props) => {
         to = props.to.endOf('week');
     }
 
-    const [error, setError] = createSignal();
+    const [error, setError] = createSignal<string>();
 
     if (from.isAfter(to, 'day') || from.isSame(to, 'day')) {
         setError(`[from] must less than [to]`);
